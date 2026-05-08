@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>戀愛腦人格測試｜戀愛腦拍賣行</title>
+  <style>
+    :root{
+      --red:#8b1e18;
+      --red2:#b63a32;
+      --pink:#f3b6bd;
+      --paper:#f7ead8;
+      --paper2:#fff8ee;
+      --ink:#2a1712;
+      --muted:#72594f;
+      --line:#d9bda6;
+      --dark:#241511;
+      --accent:#ff625b;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      padding:24px;
+      font-family:"Noto Serif TC","Songti TC","Microsoft JhengHei","PingFang TC",serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(243,182,189,.28), transparent 24%),
+        radial-gradient(circle at 88% 10%, rgba(182,58,50,.25), transparent 28%),
+        radial-gradient(circle at 50% 100%, rgba(255,216,190,.16), transparent 34%),
+        linear-gradient(135deg,#180f0d 0%,#421915 48%,#120b0a 100%);
+    }
+
+    .wrap{
+      width:100%;
+      max-width:940px;
+      margin:0 auto;
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      border-radius:26px;
+      border:2px solid #3a1714;
+      background:var(--paper);
+      box-shadow:0 24px 70px rgba(0,0,0,.38);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:13px;
+      border:1px dashed rgba(139,30,24,.32);
+      border-radius:20px;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .header{
+      position:relative;
+      z-index:2;
+      padding:36px 38px 22px;
+      border-bottom:2px solid rgba(139,30,24,.22);
+      background:
+        linear-gradient(90deg,rgba(139,30,24,.16),transparent 52%,rgba(243,182,189,.18)),
+        var(--paper);
+    }
+
+    .badge{
+      display:inline-block;
+      margin-bottom:14px;
+      padding:7px 13px;
+      border-radius:999px;
+      background:var(--red);
+      color:#fff;
+      font-size:13px;
+      letter-spacing:.1em;
+      font-weight:700;
+    }
+
+    h1{
+      margin:0;
+      font-size:44px;
+      line-height:1.08;
+      letter-spacing:.04em;
+    }
+
+    .subtitle{
+      margin-top:13px;
+      color:var(--red2);
+      font-size:18px;
+      font-weight:800;
+      line-height:1.55;
+    }
+
+    .body{
+      position:relative;
+      z-index:2;
+      padding:28px 38px 36px;
+    }
+
+    .note{
+      margin-bottom:22px;
+      padding:16px 18px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:var(--paper2);
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.8;
+    }
+
+    .progress{
+      height:10px;
+      margin:10px 0 24px;
+      overflow:hidden;
+      border-radius:999px;
+      background:#ead4c2;
+    }
+
+    .bar{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--red2),#e98d98);
+      transition:width .28s ease;
+    }
+
+    .qno{
+      margin-bottom:8px;
+      color:var(--red);
+      font-size:16px;
+      font-weight:900;
+    }
+
+    .question{
+      margin-bottom:18px;
+      font-size:25px;
+      font-weight:900;
+      line-height:1.38;
+    }
+
+    .options{
+      display:grid;
+      gap:12px;
+    }
+
+    .opt{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:15px 16px;
+      border:1.5px solid var(--line);
+      border-radius:16px;
+      background:#fffaf3;
+      cursor:pointer;
+      transition:.18s ease;
+      font-size:17px;
+      line-height:1.55;
+    }
+
+    .opt:hover{
+      transform:translateY(-1px);
+      border-color:var(--red2);
+      box-shadow:0 10px 22px rgba(139,30,24,.13);
+    }
+
+    .opt.selected{
+      border-color:var(--red);
+      background:#f8d7da;
+      box-shadow:0 0 0 3px rgba(182,58,50,.12);
+    }
+
+    .letter{
+      flex:0 0 30px;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:var(--red);
+      color:white;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-family:Arial,sans-serif;
+      font-weight:900;
+      font-size:14px;
+      margin-top:1px;
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:25px;
+    }
+
+    button{
+      appearance:none;
+      border:0;
+      border-radius:999px;
+      padding:12px 23px;
+      background:var(--accent);
+      color:#241511;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 9px 0 rgba(36,21,17,.9);
+      border:2px solid #241511;
+      transition:.18s ease;
+    }
+
+    button:hover{ transform:translateY(-1px); }
+
+    button.secondary{
+      background:#fff8ef;
+      color:#241511;
+      box-shadow:0 9px 0 rgba(36,21,17,.9);
+    }
+
+    button:disabled{
+      cursor:not-allowed;
+      opacity:.45;
+      transform:none;
+    }
+
+    .hidden{ display:none; }
+
+    .result{
+      display:none;
+      text-align:center;
+      padding:8px 0 4px;
+    }
+
+    .result h2{
+      margin:10px 0 8px;
+      color:var(--red);
+      font-size:38px;
+      line-height:1.2;
+    }
+
+    .score{
+      margin:8px 0 14px;
+      color:var(--muted);
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .tags{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:18px 0;
+    }
+
+    .tag{
+      padding:7px 13px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff8ef;
+      color:var(--red);
+      font-weight:800;
+      font-size:14px;
+    }
+
+    .resultText{
+      max-width:700px;
+      margin:0 auto;
+      padding:20px 21px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fffaf3;
+      text-align:left;
+      line-height:1.9;
+      font-size:17px;
+    }
+
+    .advice{
+      max-width:700px;
+      margin:18px auto 0;
+      padding:18px 21px;
+      border:2px dashed #241511;
+      border-radius:18px;
+      background:#fff6ec;
+      text-align:left;
+      line-height:1.9;
+      font-size:17px;
+    }
+
+    .advice strong{ font-size:19px; display:block; margin-bottom:6px; }
+
+    .activity{
+      max-width:700px;
+      margin:22px auto 0;
+      padding:24px 24px;
+      border-radius:22px;
+      background:#2a1512;
+      color:#fff9ef;
+      text-align:left;
+      line-height:1.8;
+      font-size:18px;
+    }
+
+    .activity h3{
+      margin:0 0 14px;
+      font-size:22px;
+      color:#fff;
+      letter-spacing:.03em;
+    }
+
+    .activity p{ margin:8px 0; }
+
+    .activity strong{ color:#fff; }
+
+    .shareBox{
+      max-width:700px;
+      margin:22px auto 0;
+      padding:20px 21px;
+      border:2px solid #241511;
+      border-radius:20px;
+      background:#fffaf3;
+      text-align:left;
+      line-height:1.8;
+      font-size:17px;
+    }
+
+    .shareBox strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:19px;
+    }
+
+    .share{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .footer{
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:14px;
+      padding:16px 38px;
+      border-top:1px solid rgba(139,30,24,.2);
+      background:rgba(255,255,255,.28);
+      color:#6f574d;
+      font-size:13px;
+    }
+
+    @media(max-width:650px){
+      body{ padding:12px; }
+      .header{ padding:28px 22px 17px; }
+      .body{ padding:22px; }
+      .footer{ padding:14px 22px; }
+      h1{ font-size:32px; }
+      .subtitle{ font-size:16px; }
+      .question{ font-size:21px; }
+      .opt{ font-size:16px; }
+      .result h2{ font-size:30px; }
+      .activity{ font-size:17px; padding:22px 20px; }
+      .nav{ flex-direction:column; }
+      button{ width:100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="badge">LOVE BRAIN AUCTION HOUSE</div>
+        <h1>戀愛腦人格測試</h1>
+        <div class="subtitle">愛無定價，故事無價。你的戀愛腦指數，今天可以估一估。</div>
+      </div>
+
+      <div class="body">
+        <section id="intro">
+          <div class="note">
+            本測試為《戀愛腦拍賣行》展演活動互動測評，僅用於趣味參與與情緒表達，不代表專業心理診斷。請根據第一直覺作答，看看你會成為哪一種「情緒拍品」。
+          </div>
+          <button onclick="startQuiz()">開始估價</button>
+        </section>
+
+        <section id="quiz" class="hidden">
+          <div class="progress"><div class="bar" id="bar"></div></div>
+          <div class="qno" id="qno"></div>
+          <div class="question" id="question"></div>
+          <div class="options" id="options"></div>
+          <div class="nav">
+            <button class="secondary" id="prevBtn" onclick="prevQuestion()">上一題</button>
+            <button id="nextBtn" onclick="nextQuestion()" disabled>下一題</button>
+          </div>
+        </section>
+
+        <section id="result" class="result">
+          <div class="badge">測試結果</div>
+          <h2 id="rtype"></h2>
+          <div class="score" id="score"></div>
+          <div class="tags" id="tags"></div>
+          <div class="resultText" id="rtext"></div>
+
+          <div class="advice">
+            <strong>清醒建議</strong>
+            <span id="adviceText"></span>
+          </div>
+
+          <div class="activity">
+            <h3>《戀愛腦拍賣行》活動預告</h3>
+            <p>如果你的故事也曾出現「等待、原諒、單向奔赴、沉沒成本」，歡迎來到戀愛腦拍賣行。</p>
+            <p><strong>預計時間：</strong>6月30日前後</p>
+            <p><strong>預計地點：</strong>珠三角地區 / 澳門</p>
+            <p><strong>活動形式：</strong>匿名故事投稿、戀愛腦指數評估、情緒拍品展示、現場拍賣、清醒證明領取。</p>
+          </div>
+
+          <div class="shareBox">
+            <strong>分享文案參考：</strong>
+            <span id="shareText"></span>
+          </div>
+
+          <div class="share">
+            歡迎來到《戀愛腦拍賣行》。你的故事值得被看見，但你不需要被拍賣。<br>
+            你可以截圖分享你的結果，或把測試連結發給朋友一起估價。
+          </div>
+
+          <div class="nav" style="justify-content:center">
+            <button onclick="restart()">重新測試</button>
+            <button class="secondary" onclick="copyShareText()">複製分享文案</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer">
+        <span>《戀愛腦拍賣行》互動測評</span>
+        <span>你可以為愛投入，但不必把自己拍賣出去。</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      ["喜歡的人突然不回消息，你通常會？",["先去做自己的事，等對方有空再說","有點在意，但不會一直盯著手機","反覆點開聊天框，開始猜測原因","腦補一整部感情懸疑片，甚至想發小作文"]],
+      ["如果對方臨時取消約會，你會？",["接受安排，自己也可以過得很好","有點失望，但會表達自己的感受","表面說沒事，心裡反覆難過","立刻開始替對方找理由，覺得一定是自己不夠好"]],
+      ["戀愛中你最容易付出的是什麼？",["合理的時間和情緒","會多花一些心思，但有邊界","經常犧牲自己的安排","只要對方需要，我的時間、計劃、情緒都可以讓位"]],
+      ["朋友提醒你「這段關係不太對勁」時，你會？",["認真聽，並重新判斷關係","聽進去一部分，但還想再觀察","嘴上說知道，心裡繼續替對方解釋","覺得朋友不懂我們的感情"]],
+      ["對方偶爾給你一點回應，你會？",["正常看待，不會過度解讀","會開心，但不會改變整體判斷","覺得也許還有希望","立刻復燃，開始重新規劃未來"]],
+      ["如果一段關係讓你長期內耗，你會？",["及時止損","猶豫後嘗試溝通","一邊痛苦一邊繼續撐著","明知道不好，也覺得自己放不下"]],
+      ["你怎麼看「為愛改變自己」？",["可以調整，但不能失去自己","小範圍改變可以接受","只要關係能變好，我願意改很多","如果是為了對方，我甚至可以不像自己"]],
+      ["你最容易被哪句話打動？",["我們都要成為更好的自己","我會認真回應你的感受","只有你懂我","我只是現在還不能給你確定答案"]],
+      ["關係裡出現冷暴力或忽冷忽熱時，你會？",["明確溝通，不行就離開","先觀察一段時間","嘗試用更多付出來換回應","越冷越上頭，越不確定越想證明自己"]],
+      ["你對「沉沒成本」的態度是？",["付出過不代表必須繼續","會不捨，但可以慢慢抽離","因為付出太多，所以很難放手","我都堅持這麼久了，再等等也許就好了"]],
+      ["如果讓你給自己的戀愛狀態寫一句話，你會選？",["愛別人之前，先把自己帶好","我可以真誠，但也要有邊界","我總是在關係裡想太多","我願意把自己拍賣給一段不確定的愛"]],
+      ["參加《戀愛腦拍賣行》，你最想拍下什麼？",["清醒證明","邊界感說明書","被看見的情緒帳單","最後一枚尊嚴幣"]]
+    ];
+
+    const results = [
+      {
+        min:0,max:7,
+        type:"清醒人類誤入型",
+        tags:["邊界感","自我穩定","低內耗"],
+        text:"你的戀愛腦指數較低。你不是不會愛，而是更懂得在關係裡保留自我。你願意付出，但不會把自己的生活秩序完全交給別人。在《戀愛腦拍賣行》裡，你大概會站在出口區，默默領取一張「清醒證明」。",
+        advice:"你可以繼續保持真誠，但也不用為了證明自己會愛，就降低自己的邊界。",
+        share:"我的戀愛人格測試結果是「清醒人類誤入型」，戀愛腦指數 {{score}}/36。你不是冷漠，只是沒有把自己弄丟。#戀愛腦拍賣行 #戀愛人格測試"
+      },
+      {
+        min:8,max:14,
+        type:"戀愛腦試用裝型",
+        tags:["偶爾上頭","可自救","輕度內耗"],
+        text:"你偶爾會上頭，也會被曖昧、回應和細節打動。但大多數時候，你還能把自己拉回來。你不是完全清醒，也不是徹底沉沒，而是在心動和理智之間來回搖擺。",
+        advice:"心動沒有錯，但每一次上頭前，可以先問自己：這是被愛，還是被不確定感拉住？",
+        share:"我的戀愛人格測試結果是「戀愛腦試用裝型」，戀愛腦指數 {{score}}/36。偶爾上頭，幸好還沒正式入庫。#戀愛腦拍賣行 #戀愛人格測試"
+      },
+      {
+        min:15,max:22,
+        type:"單向奔赴馬拉松型",
+        tags:["長期付出","期待回應","舍不得止損"],
+        text:"你的戀愛腦指數已經進入中段區間。你容易在關係中持續投入，也容易把對方的一點回應看成希望。你不是不知道累，而是常常舍不得停下來。",
+        advice:"你可以奔赴愛，但不要把所有路都跑成單行道。關係裡真正值得的回應，不需要你一直追著證明。",
+        share:"我的戀愛人格測試結果是「單向奔赴馬拉松型」，戀愛腦指數 {{score}}/36。你跑了很遠，但那個人未必在終點等你。#戀愛腦拍賣行 #戀愛人格測試"
+      },
+      {
+        min:23,max:30,
+        type:"沉沒成本型",
+        tags:["反覆原諒","難以抽離","情緒消耗"],
+        text:"你很容易因為「已經付出太多」而繼續堅持。你知道這段關係可能不值得，但還是會想：再等等、再解釋一次、再給一次機會。你的問題不是不懂清醒，而是太擅長替別人找理由。",
+        advice:"已經付出的東西不一定能拿回來，但你可以決定從今天開始不再繼續加價。",
+        share:"我的戀愛人格測試結果是「沉沒成本型」，戀愛腦指數 {{score}}/36。可以勇敢去愛，但不要把自己拍賣出去。#戀愛腦拍賣行 #戀愛人格測試"
+      },
+      {
+        min:31,max:36,
+        type:"鎮館冤種壓軸拍品型",
+        tags:["高度上頭","自我損耗","需要贖回自己"],
+        text:"你的戀愛腦指數已經達到拍賣行壓軸級別。你容易為了關係不斷讓步，也容易把不確定當成希望，把消耗理解成深情。但請記住：你可以為愛投入，但不必把自己拍賣出去。",
+        advice:"本次拍賣結束，請把自己帶回家。你值得被愛，也值得被好好對待。",
+        share:"我的戀愛人格測試結果是「鎮館冤種壓軸拍品型」，戀愛腦指數 {{score}}/36。本次拍賣結束，請把自己帶回家。#戀愛腦拍賣行 #戀愛人格測試"
+      }
+    ];
+
+    let current = 0;
+    let answers = Array(questions.length).fill(null);
+    let finalShareText = "";
+
+    function startQuiz(){
+      document.getElementById("intro").classList.add("hidden");
+      document.getElementById("quiz").classList.remove("hidden");
+      render();
+    }
+
+    function render(){
+      const q = questions[current];
+      document.getElementById("qno").textContent = `第 ${current + 1} / ${questions.length} 題`;
+      document.getElementById("question").textContent = q[0];
+      document.getElementById("bar").style.width = `${(current / questions.length) * 100}%`;
+
+      const box = document.getElementById("options");
+      box.innerHTML = "";
+
+      q[1].forEach((text, index) => {
+        const option = document.createElement("div");
+        option.className = "opt" + (answers[current] === index ? " selected" : "");
+        option.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span><span>${text}</span>`;
+        option.onclick = () => {
+          answers[current] = index;
+          render();
+        };
+        box.appendChild(option);
+      });
+
+      document.getElementById("prevBtn").disabled = current === 0;
+      document.getElementById("nextBtn").disabled = answers[current] === null;
+      document.getElementById("nextBtn").textContent = current === questions.length - 1 ? "查看拍賣結果" : "下一題";
+    }
+
+    function nextQuestion(){
+      if(current < questions.length - 1){
+        current++;
+        render();
+      }else{
+        showResult();
+      }
+    }
+
+    function prevQuestion(){
+      if(current > 0){
+        current--;
+        render();
+      }
+    }
+
+    function showResult(){
+      const totalScore = answers.reduce((sum, item) => sum + item, 0);
+      const result = results.find(item => totalScore >= item.min && totalScore <= item.max);
+
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("result").style.display = "block";
+
+      document.getElementById("rtype").textContent = result.type;
+      document.getElementById("score").textContent = `你的戀愛腦指數：${totalScore} / 36`;
+      document.getElementById("tags").innerHTML = result.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
+      document.getElementById("rtext").textContent = result.text;
+      document.getElementById("adviceText").textContent = result.advice;
+
+      finalShareText = result.share.replace("{{score}}", totalScore);
+      document.getElementById("shareText").textContent = finalShareText;
+      document.getElementById("bar").style.width = "100%";
+    }
+
+    function restart(){
+      current = 0;
+      answers = Array(questions.length).fill(null);
+      finalShareText = "";
+      document.getElementById("result").style.display = "none";
+      document.getElementById("intro").classList.remove("hidden");
+    }
+
+    function copyShareText(){
+      if(!finalShareText) return;
+      navigator.clipboard.writeText(finalShareText).then(() => {
+        alert("分享文案已複製");
+      }).catch(() => {
+        alert("複製失敗，請手動選取分享文案");
+      });
+    }
+  </script>
+</body>
+</html>
